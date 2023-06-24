@@ -18,6 +18,7 @@ lang_tr = {
 #function to trabslate the text
 def translate_text(text, from_lang, to_lang):
     blob = TextBlob(text)
+    print(f"I am converting {from_lang} to {to_lang}")
     translated_text = blob.translate(from_lang=from_lang, to=to_lang)
     return translated_text
 
