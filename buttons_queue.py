@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 import os, sys, threading, queue, time, subprocess
 
 button_1_selected = False

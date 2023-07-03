@@ -1,20 +1,13 @@
-#Assignment: Python Project 1
-#Joshua Pacheco (JP), 6/04/2023, The Translator Two Thousand, Python3 project
-#I am estimating this will take 3 hours to code. It actually took 4 hours to code, as I had issues 
-##Spent an additional 1 hour fixing the language output to be the Spanish accent for the when it speaks spanish translation
-
+#Assignment: Final Project
+#Joshua Pacheco (JP), 6/26/2023, The Translator Three Thousand, Python3 project
+#I am estimating this will take 4 hours to code the buttons_queue.py blackbox. It actually took 2 days to code, as I had issues with the Raspberry Pi
 
 import sys, textwrap, time
 import speech_recognition as sr
 from textblob import TextBlob
 import pyttsx3
-
-import time, Adafruit_GPIO.SPI as SPI, Adafruit_SSD1306
-from PIL import Image
-from PIL import ImageDraw
-from PIL import ImageFont
+import time, Adafruit_GPIO.SPI as SPI
 import buttons_queue
-
 import RPi_I2C_driver
 from time import *
 from builtins import chr
@@ -27,19 +20,19 @@ WIDTH = 20
 
 ESPEAK_VOICE="english-mb-en1"
 
-
 WELCOME_TEXT = """Hello, I am the Translator Interface Three Thousand"""
 SELECTION_ROWS = ["","<-Spanish - English"," English - Spanish->"]
 
 if DISPLAY_MODE == 'lcd':
   mylcd = RPi_I2C_driver.lcd()
 
-if DISPLAY_MODE == 'oled':
+"""if DISPLAY_MODE == 'oled':
     RST = None
     DC = 23
     SPI_PORT = 0
     SPI_DEVICE = 0
     disp = Adafruit_SSD1306.SSD1306_128_32(rst=RST)
+"""
 
     disp.begin()
     disp.clear()
@@ -61,13 +54,11 @@ lang_tr = {
     'es': "Spanish",
 }
 
-
 DELAY_SECONDS = 7
 def block_until_enter():
     print(f"Starting delay of {DELAY_SECONDS} seconds")
     sleep(DELAY_SECONDS)
     print("Delay expired. removing translated text from display and returning to menu")
-
 
 def draw_rows_on_display(ROWS):
     if DISPLAY_MODE == 'lcd':
@@ -80,7 +71,7 @@ def draw_rows_on_display(ROWS):
           mylcd.lcd_display_string(ROWS[2], 3)
         if len(ROWS) > 3:
           mylcd.lcd_display_string(ROWS[3], 4)
-    if DISPLAY_MODE == 'oled':
+    """if DISPLAY_MODE == 'oled':
         disp.clear()
         draw.rectangle((0,0,width,height), outline=0, fill=0)
         draw.text((x, top),       ROWS[0],  font=font, fill=255)
@@ -89,6 +80,7 @@ def draw_rows_on_display(ROWS):
         draw.text((x, top+24),    ROWS[3],  font=font, fill=255)
         disp.image(image)
         disp.display()
+    """
 
 def draw_text_on_display(TEXT):
     #print(f'Converting {len(TEXT)} characters of text to rows of max length {WIDTH}: "{TEXT}"')
@@ -116,7 +108,7 @@ def draw_text_on_display(TEXT):
         mylcd.lcd_display_string(l2, 2)
         mylcd.lcd_display_string(l3, 3)
         mylcd.lcd_display_string(l4, 4)
-    if DISPLAY_MODE == 'oled':
+    """if DISPLAY_MODE == 'oled':
         disp.clear()
         draw.rectangle((0,0,width,height), outline=0, fill=0)
         draw.text((x, top),       l1,  font=font, fill=255)
@@ -125,6 +117,7 @@ def draw_text_on_display(TEXT):
         draw.text((x, top+24),    l4,  font=font, fill=255)
         disp.image(image)
         disp.display()
+    """
 
 #function to trabslate the text
 def translate_text(text, from_lang, to_lang):
@@ -167,8 +160,7 @@ def listen_for_speech(language):
         print(f"Recognition request error: {str(e)}")
         return None
 
-
-#main menu funtion
+#main menu function
 def menu():
     engine = pyttsx3.init()
     voices = engine.getProperty('voices')
